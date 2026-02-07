@@ -1,0 +1,112 @@
+exporter_port: 8000
+polling_interval: 28800s # 8h
+target_aws_accounts:
+  - account_id: "123456789012"
+    assumed_role_name: my-cost-exporter-role
+    labels:
+      ProjectName: MyProject
+      Environment: production
+
+metrics:
+  - metric_name: aws_daily_cost_by_tag_name_by_service
+    metric_description: Daily cost of an AWS account in USD by service and account
+    granularity: DAILY
+    group_by:
+      enabled: true
+      groups:
+        - type: DIMENSION
+          key: SERVICE
+          label_name: ServiceName
+        - type: TAG
+          key: Name
+          label_name: Name
+      merge_minor_cost:
+        enabled: false
+        threshold: 10
+        tag_value: other
+    metric_type: AmortizedCost
+  - metric_name: aws_daily_cost_by_service
+    metric_description: Daily cost of an AWS account in USD by service and account
+    granularity: DAILY
+    group_by:
+      enabled: true
+      groups:
+        - type: DIMENSION
+          key: SERVICE
+          label_name: ServiceName
+        - type: DIMENSION
+          key: REGION
+          label_name: RegionName
+      merge_minor_cost:
+        enabled: false
+        threshold: 10
+        tag_value: other
+    metric_type: AmortizedCost
+  - metric_name: aws_daily_cost_by_tag_costcenter_by_service
+    metric_description: Daily cost of an AWS account in USD by service and account
+    granularity: DAILY
+    group_by:
+      enabled: true
+      groups:
+        - type: DIMENSION
+          key: SERVICE
+          label_name: ServiceName
+        - type: TAG
+          key: CostCenter
+          label_name: CostCenter
+      merge_minor_cost:
+        enabled: false
+        threshold: 10
+        tag_value: other
+    metric_type: AmortizedCost
+  - metric_name: aws_monthly_cost_by_service
+    metric_description: Monthly cost of an AWS account in USD
+    granularity: MONTHLY
+    group_by:
+      enabled: true
+      groups:
+        - type: DIMENSION
+          key: SERVICE
+          label_name: ServiceName
+        - type: DIMENSION
+          key: REGION
+          label_name: RegionName
+      merge_minor_cost:
+        enabled: false
+        threshold: 10
+        tag_value: other
+    metric_type: AmortizedCost
+  - metric_name: aws_monthly_cost_by_tag_name_by_service
+    metric_description: Monthly cost of an AWS account in USD
+    granularity: MONTHLY
+    group_by:
+      enabled: true
+      groups:
+        - type: DIMENSION
+          key: SERVICE
+          label_name: ServiceName
+        - type: TAG
+          key: Name
+          label_name: Name
+      merge_minor_cost:
+        enabled: false
+        threshold: 10
+        tag_value: other
+    metric_type: AmortizedCost
+  - metric_name: aws_monthly_cost_by_tag_costcenter_by_service
+    metric_description: Monthly cost of an AWS account in USD
+    granularity: MONTHLY
+    group_by:
+      enabled: true
+      groups:
+        - type: DIMENSION
+          key: SERVICE
+          label_name: ServiceName
+        - type: TAG
+          key: CostCenter
+          label_name: CostCenter
+      merge_minor_cost:
+        enabled: false
+        threshold: 10
+        tag_value: other
+    metric_type: AmortizedCost
