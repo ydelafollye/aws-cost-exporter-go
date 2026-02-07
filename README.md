@@ -76,3 +76,28 @@ cp config.example.yaml config.yaml
 ```
 
 See `config.example.yaml` for a configuration example.
+
+## Build
+
+### Local build
+
+```bash
+make build
+./.build/aws-cost-exporter
+```
+
+### Docker
+
+Build for your current architecture:
+
+```bash
+make build-linux-amd64  # or build-linux-arm64
+docker build --build-arg ARCH=amd64 -t aws-cost-exporter .
+```
+
+Build multi-architecture (amd64 + arm64):
+
+```bash
+make build-all
+docker buildx build --platform linux/amd64,linux/arm64 -t aws-cost-exporter .
+```
