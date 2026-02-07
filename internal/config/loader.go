@@ -18,7 +18,7 @@ func Load(path string) (*Config, error) {
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", "_"))
 
 	// Default values
-	viper.SetDefault("exporter_port", 9090)
+	viper.SetDefault("exporter_port", 9000)
 	viper.SetDefault("polling_interval_seconds", 28800)
 
 	if err := viper.ReadInConfig(); err != nil {
