@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"log/slog"
 	"os"
 	"os/signal"
@@ -22,8 +23,12 @@ func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	slog.SetDefault(logger)
 
+	// Parse flags
+	configPath := flag.String("config", "/etc/aws-cost-exporter/config.yaml", "path to config file")
+	flag.Parse()
+
 	// Load config
-	cfg, err := config.Load("config.yaml")
+	cfg, err := config.Load(*configPath)
 	if err != nil {
 		slog.Error("failed to load config file", "error", err)
 		os.Exit(1)
