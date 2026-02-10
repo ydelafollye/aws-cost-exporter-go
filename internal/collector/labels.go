@@ -63,6 +63,12 @@ func buildLabelValues(account config.AWSAccount, metricCfg *config.MetricConfig,
 			if i < len(keys) {
 				keyValue = keys[i]
 			}
+			// strip the prefix to keep only the tag value.
+			if group.Type == "TAG" {
+				if prefix := group.Key + "$"; strings.HasPrefix(keyValue, prefix) {
+					keyValue = strings.TrimPrefix(keyValue, prefix)
+				}
+			}
 			values = append(values, keyValue)
 			if group.Alias != nil {
 				aliasValue := keyValue
