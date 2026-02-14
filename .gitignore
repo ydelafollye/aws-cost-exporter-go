@@ -39,3 +39,6 @@ config.local.yaml
 
 # Build artifacts
 .build/
+
+# Nix
+.direnv/
